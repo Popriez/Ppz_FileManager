@@ -62,34 +62,8 @@ class fileManager(object):
             self.realTimePath = self.asdeptPath
             self.asfilList = os.listdir(self.asdeptPath) # [char_norman_Rig.v001.ma]
         '''
-        
-        #### save file ####    
-        def save(self,*args):
-            pathN = 'Y01_0010_Layout_' # pathN = keep name of path "seq_shot_dept_"
-            name = "master" # name = keep name of file
-            fil = os.listdir(''+variablePath+'/YIT/sequences/Y01/Y01_0010/Layout/scenes') # show list of file (use self.path)
-            v=0
-            
-            ### check version ###
-            for c in fil:
-                if re.search(name,c): # name = name of file
-                    b = re.search('[.][v][0-9]+',c)
-                    b = str(b.group()) # b = v.xxx
-                    ## version
-                    a = re.search('[0-9]+',b)
-                    a = int(a.group()) # a = x
-                    print a
-                    if a>v:
-                        v=a # v = x (lastest version)
-            #####################
-            
-            #(use self.path)
-            mc.file(rename = ''+self.variablePath+'/YIT/sequences/Y01/Y01_0010/Layout/scenes/%s%s.v%03d.ma'%(pathN,name,v+1))
-            mc.file(save = True ,type = 'mayaAscii')
-            
-        def open(self,*args):
-            #(use self.path)
-            mc.file(''+self.variablePath+'/YIT/sequences/Y01/Y01_0010/Layout/scenes/Y01_0010_Layout_master.v001.ma',open=True)
+         
+
         
         def enter(self):
             #### list
