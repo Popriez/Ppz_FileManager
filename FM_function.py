@@ -49,6 +49,10 @@ class fileManager(object):
             #(use self.realTimePath)
             mc.file(rename = ''+self.realTimePath+'/%s%s.v%03d.ma'%(self.pathN,name,v+1))
             mc.file(save = True ,type = 'mayaAscii')
+        
+        def saveover(self,name,*args):
+            mc.file(rename = ''+self.realTimePath+'/'+name+'')
+            mc.file(save = True ,type = 'mayaAscii')
             
         def open(self,name,*args):
             #(use self.realTimePath)
