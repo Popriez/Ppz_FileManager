@@ -11,3 +11,5 @@ if not path in sys.path:
 import package.FM_gui as gui
 
 reload(gui)
+
+t = gui()

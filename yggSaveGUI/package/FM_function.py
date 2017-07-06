@@ -110,20 +110,28 @@ class fileManager(object):
                     ## version
                     a = re.search('[0-9]+',b)
                     a = int(a.group()) # a = x
-                    print a
                     if a>v:
                         v=a # v = x (lastest version)
             #####################
-            
-            #(use self.realTimePath)
-            cmds.file(rename = ''+self.realTimePath+'/%s%s.v%03d.ma'%(self.pathN,name,v+1))
-            cmds.file(save = True ,type = 'mayaAscii')
-            ### save assets ###
             if 'asset' in self.realTimePath:
                 self.pathN = '%s_%s_%s_'%(self.assN,self.shtN,self.deptN)
-                print self.pathN
+                for c in self.listRealTimePath:
+                    if re.search(self.pathN,c): # name = name of file
+                        b = re.search('[.][v][0-9]+',c)
+                        b = str(b.group()) # b = v.xxx
+                        ## version
+                        a = re.search('[0-9]+',b)
+                        a = int(a.group()) # a = x
+                        if a>v:
+                            v=a # v = x (lastest version)
                 cmds.file(rename = ''+self.realTimePath+'/%s.v%03d.ma'%(self.pathN,v+1))
                 cmds.file(save = True ,type = 'mayaAscii')
+            #(use self.realTimePath)
+            else:
+                cmds.file(rename = ''+self.realTimePath+'/%s%s.v%03d.ma'%(self.pathN,name,v+1))
+                cmds.file(save = True ,type = 'mayaAscii')
+            ### save assets ###
+
             self.set_path()
     
         #if self.up == 0 :
@@ -189,8 +197,8 @@ class fileManager(object):
             if self.shtNameList != []:
                 cmds.deleteUI( self.shtNameList , menuItem=True)
             self.shtNameList = os.listdir(self.seqAssPath) # [Y01_0010 , Y01_0010]
-            if input == 'assets':
-                self.assN = input
+            self.assN = input[0:4]
+            print self.assN
                 
             self.set_path()
             cmds.optionMenu(['shotName'],e=True ,en=1)
