@@ -1,15 +1,16 @@
 ### test sys ###
 import getpass
 import sys
+import maya.cmds as cmds
 user = getpass.getuser()
 path = "C:/Users/"+user+"/Documents/yggSaveGUI"
 if not path in sys.path:
     sys.path.append(path)
     
-import package.FM_function as func
+import package.FM_function as function
 reload(function)
 
-f = func.fileManager()
+f = function.fileManager()
 
 f.display()
 
@@ -60,7 +61,7 @@ cmds.setParent('..')
 
 cmds.columnLayout('menu2' ,adjustableColumn = True,cal='right')
 cmds.paneLayout(configuration = 'vertical3')
-cmds.frameLayout ("Name", label ="Name" )
+cmds.frameLayout ("Name", label ="Name",w=200 )
 cmds.iconTextScrollList('displayN', append=(f.listRealTimePath),h=200 ,doubleClickCommand=f.enterPath , selectCommand=f.sel )
 cmds.setParent('..')
 cmds.frameLayout ("Date", label ="Date Modiefied" )
