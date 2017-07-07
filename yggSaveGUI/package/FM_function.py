@@ -27,16 +27,6 @@ class fileManager(object):
             self.shtNamePath = ''
             self.deptList = []
             self.deptPath = ''
-        
-        """    
-        def enter(self):
-            self.listRealTimePath =  os.listdir(self.realTimePath)
-            print self.listRealTimePath
-            enter = raw_input()
-            enter = str(enter)
-            print enter
-            return enter
-        """
                               
         def enterPath(self,*args):
             input = cmds.iconTextScrollList('displayN' ,q=True,selectItem=True)
@@ -82,24 +72,11 @@ class fileManager(object):
                 cmds.optionMenu(['dept'],e=True ,select = count )
                 self.set_dept(input)
                 
-            """
-            self.realTimePath = self.realTimePath + "/" + input
-            print self.realTimePath
-            self.listRealTimePath =  os.listdir(self.realTimePath)
-            print self.listRealTimePath
-            self.updateCh(input)
-            self.set_path()
-            """
-        
-        def repath(self,*args):
-            self.realTimePath = os.path.dirname(self.realTimePath)
-            
+
         def save(self,*args):
-        #if self.up == 1:
             name = cmds.textField('taskName' , q=True , text=True)
             self.pathN = '%s_%s_'%(self.shtN,self.deptN) # pathN = keep name of path "seq_shot_dept_"
-            #name = "master" # name = keep name of file
-            #fil = os.listdir(''+self.realTimePath+'') # show list of file (realTimePath)
+
             v=0
             
             ### check version ##
@@ -113,6 +90,7 @@ class fileManager(object):
                     if a>v:
                         v=a # v = x (lastest version)
             #####################
+            ### save assets ###
             if 'asset' in self.realTimePath:
                 self.pathN = '%s_%s_%s_'%(self.assN,self.shtN,self.deptN)
                 for c in self.listRealTimePath:
@@ -126,28 +104,20 @@ class fileManager(object):
                             v=a # v = x (lastest version)
                 cmds.file(rename = ''+self.realTimePath+'/%s.v%03d.ma'%(self.pathN,v+1))
                 cmds.file(save = True ,type = 'mayaAscii')
-            #(use self.realTimePath)
+            ### save sequences ###    
             else:
                 cmds.file(rename = ''+self.realTimePath+'/%s%s.v%03d.ma'%(self.pathN,name,v+1))
                 cmds.file(save = True ,type = 'mayaAscii')
-            ### save assets ###
+
 
             self.set_path()
     
-        #if self.up == 0 :
-            #self.sel = ''.join(self.sel)
-            #cmds.file(rename = ''+self.realTimePath+'/'+self.sel+'')
-            #cmds.file(save = True ,type = 'mayaAscii')
             
         def open(self,*args):
             self.sel = ''.join(self.sel)
             #(use self.realTimePath)
             cmds.file(''+self.realTimePath+'/'+self.sel+'',open=True)
             
-        #def updateOn(self,*args):
-            #self.up = 1
-        #def updateOff(self,*args):
-            #self.up = 0
             
             
             
@@ -231,37 +201,6 @@ class fileManager(object):
             
             self.set_path()
             
-        """ 
-        def updateCh(self,*args):
-            count = 2
-            for x in self.projList:
-                if input in x:
-                    break
-                count+=1
-            return count
-                        
-
-            if input in self.projList:
-                self.projPath = self.realTimePath
-                self.saList = os.listdir(self.projPath)
-            elif input in self.saList:
-                self.saPath = self.realTimePath
-                self.seqAssList = os.listdir(self.saPath)
-            elif input in self.seqAssList:
-                self.seqAssPath = self.realTimePath
-                self.shtNameList = os.listdir(self.seqAssPath)
-                if 'assets' in self.saPath:
-                    self.assN = input
-                    print self.assN
-            elif input in self.shtNameList:
-                self.shtNamePath = self.realTimePath
-                self.deptList = os.listdir(self.shtNamePath)
-                self.shtN = input
-            elif input in self.deptList:
-                self.deptPath = self.realTimePath
-                self.filList = os.listdir(self.deptPath)
-                self.deptN = input
-        """
         
         def convert_size(self,size_bytes):
            if size_bytes == 0:
@@ -282,9 +221,6 @@ class fileManager(object):
                 self.Size = os.path.getsize('%s/%s'%(self.realTimePath,x))
                 self.fileSize.append  (self.convert_size(self.Size))
         
-        def set_default(self,*args):
-            self.defaultPath = self.realTimePath
-            self.realTimePath = self.defaultPath
         
         def set_path(self,*args):
             self.display()
@@ -296,19 +232,4 @@ class fileManager(object):
             
         def sel(self,*args):
                 self.sel = cmds.iconTextScrollList('displayN',q=True , selectItem=True)
-                #if self.up == 0:
-                    #self.sel = ''.join(self.sel)
-                    #cmds.textField('taskName' , e=True , text = self.sel)
-
         
-'''            
-t = fileManager()
-t.enterPath(t.enter())
-t.set_sa(t.enter())
-t.enterPath(t.enter())
-t.enterPath(t.enter())
-t.enterPath(t.enter())
-t.enterPath(t.enter())
-t.save(t.enter())
-t.display()
-'''
